@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="content-section">
+    <h2>All Videos</h2>
+    
+    {% if videos %}
+        <div class="videos-grid">
+            {% for video in videos %}
+                <div class="video-card">
+                    <div class="video-header">
+                        <h3>{{ video.name }}</h3>
+                        <span class="video-duration">{{ video.time }}</span>
+                    </div>
+                    <div class="video-actions">
+                        <a href="{{ url_for('update_video', index=loop.index) }}" class="btn btn-edit">Edit</a>
+                        <a href="{{ url_for('delete_video', index=loop.index) }}" class="btn btn-delete" onclick="return confirm('Are you sure?')">Delete</a>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    {% else %}
+        <div class="no-videos">
+            <p>No videos added yet. <a href="{{ url_for('add_video') }}">Add your first video!</a></p>
+        </div>
+    {% endif %}
+
+    <div class="stats">
+        <p><strong>Total Videos:</strong> {{ videos|length }}</p>
+    </div>
+</div>
+{% endblock %}
